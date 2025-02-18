@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.fxmisc.richtext.InlineCssTextArea?>
+<?import javafx.scene.control.TextArea?>
+
+<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quark.chatformatter.MainController">
+    <top>
+        <HBox fx:id="colorButtons" alignment="CENTER" spacing="1.5">
+            <Button fx:id="blackButton" style="-fx-background-color: #000000;" styleClass="color-button" />
+            <Button fx:id="darkBlueButton" style="-fx-background-color: #0000AA;" styleClass="color-button" />
+            <Button fx:id="darkGreenButton" style="-fx-background-color: #00AA00;" styleClass="color-button" />
+            <Button fx:id="darkAquaButton" style="-fx-background-color: #00AAAA;" styleClass="color-button" />
+            <Button fx:id="darkRedButton" style="-fx-background-color: #AA0000;" styleClass="color-button" />
+            <Button fx:id="darkPurpleButton" style="-fx-background-color: #AA00AA;" styleClass="color-button" />
+            <Button fx:id="goldButton" style="-fx-background-color: #FFAA00;" styleClass="color-button" />
+            <Button fx:id="grayButton" style="-fx-background-color: #AAAAAA;" styleClass="color-button" />
+            <Button fx:id="darkGrayButton" style="-fx-background-color: #555555;" styleClass="color-button" />
+            <Button fx:id="blueButton" style="-fx-background-color: #5555FF;" styleClass="color-button" />
+            <Button fx:id="greenButton" style="-fx-background-color: #55FF55;" styleClass="color-button" />
+            <Button fx:id="aquaButton" style="-fx-background-color: #55FFFF;" styleClass="color-button" />
+            <Button fx:id="redButton" style="-fx-background-color: #FF5555;" styleClass="color-button" />
+            <Button fx:id="lightPurpleButton" style="-fx-background-color: #FF55FF;" styleClass="color-button" />
+            <Button fx:id="yellowButton" style="-fx-background-color: #FFFF55;" styleClass="color-button" />
+            <Button fx:id="whiteButton" style="-fx-background-color: #FFFFFF;" styleClass="color-button" />
+            <BorderPane.margin>
+                <Insets bottom="5.0" top="5.0" />
+            </BorderPane.margin>
+        </HBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="2">
+            <HBox alignment="CENTER" spacing="2">
+                <Button fx:id="underlineButton" styleClass="format-button" text="Underline" />
+                <Button fx:id="boldButton" styleClass="format-button" text="Bold" />
+                <Button fx:id="italicButton" styleClass="format-button" text="Italic" />
+                <Button fx:id="strikethroughButton" styleClass="format-button" text="Strikethrough" />
+                <Button fx:id="obfuscatedButton" styleClass="format-button" text="Obfuscated" />
+                <Button fx:id="resetButton" styleClass="format-button" text="Reset" />
+            </HBox>
+            <TextArea fx:id="textCodeArea" wrapText="true" prefHeight="220.0" prefWidth="650.0" styleClass="code-text-area" />
+            <InlineCssTextArea fx:id="previewTextArea" wrapText="true" prefHeight="220.0" prefWidth="650.0" styleClass="preview-text-area" />
+        </VBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" spacing="2">
+            <Button fx:id="chatCodeButton" styleClass="action-button" text="Chat code" />
+            <Button fx:id="motdButton" styleClass="action-button" text="MOTD" />
+            <Button fx:id="copyButton" prefHeight="40.0" prefWidth="188.0" styleClass="copy-button" text="Copy" />
+            <BorderPane.margin>
+                <Insets bottom="5.0" top="5.0" />
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
+</BorderPane>

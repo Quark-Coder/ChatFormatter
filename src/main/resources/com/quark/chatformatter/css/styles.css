@@ -1,0 +1,153 @@
+.button:focused,
+.toggle-button:focused,
+.radio-button:focused > .radio,
+.check-box:focused > .box,
+.menu-button:focused,
+.choice-box:focused,
+.color-picker.split-button:focused > .color-picker-label,
+.combo-box-base:focused,
+.slider:focused .thumb {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+}
+
+#textCodeArea:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+#colorButtons > Button {
+    -fx-min-width: 40;
+    -fx-min-height: 40;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+.color-button:hover {
+    -fx-: 0.8;
+}
+
+.color-button:pressed {
+    -fx-opacity: 0.6;
+}
+
+#underlineButton {
+    -fx-underline: true;
+    -fx-font-size: 16;
+}
+
+#strikethroughButton .text {
+    -fx-strikethrough: true;
+    -fx-font-size: 16;
+}
+
+#boldButton {
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+
+#italicButton {
+    -fx-font-style: italic;
+    -fx-font-size: 16;
+}
+
+#obfuscatedButton {
+    -fx-font-size: 16;
+}
+
+#resetButton {
+    -fx-font-size: 16;
+}
+
+@font-face {
+    font-family: "MinecraftFont";
+    src: url("../fonts/MinecraftRegular.otf");
+}
+
+.code-text-area {
+    -fx-font: 22px 'Consolas';
+}
+
+.code-text-area:focused .content {
+    -fx-background-color:
+            linear-gradient(from 0px 0px to 0px 4px, derive(-fx-control-inner-background, -8%), -fx-control-inner-background);
+    -fx-background-insets: 0;
+    -fx-background-radius: 2;
+}
+
+.preview-text-area .text {
+    -fx-font: 22px 'Consolas';
+    -fx-fill: white;
+}
+
+.preview-text-area .paragraph {
+    -fx-text-alignment: center;
+}
+
+.preview-text-area {
+    -fx-background-image: url('../img/dirt.png');
+    -fx-pref-width: 600;
+    -fx-padding: 20 100 20 100;
+    -fx-pref-height: 150;
+    -fx-border-color: lightgray;
+    -fx-border-width: 1;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.popup-message {
+    -fx-background-color: #4BB543;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 5, 0.5, 0, 0);
+}
+
+.preview-text-area:focused .content {
+    -fx-background-color:
+            linear-gradient(from 0px 0px to 0px 4px, derive(-fx-control-inner-background, -8%), -fx-control-inner-background);
+    -fx-background-insets: 0;
+    -fx-background-radius: 2;
+}
+
+HBox > Button {
+    -fx-min-width: 80;
+    -fx-min-height: 40;
+}
+
+#viewButton {
+
+}
+
+#codeButton {
+
+}
+
+#chatCodeButton {
+
+}
+
+#motdButton {
+
+}
+
+#copyButton {
+    -fx-background-color: lime;
+}
+
+#copyButton:hover {
+    -fx-background-color: #00da00;
+}
+
+#copyButton:pressed {
+    -fx-background-color: #15cc15;
+}
+
+
