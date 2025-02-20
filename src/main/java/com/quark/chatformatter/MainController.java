@@ -78,102 +78,114 @@ public class MainController {
 
         boldButton.setOnAction(e -> {
             toggleStyle("-fx-font-weight: bold;");
-            toggleCode("§l", "§r");
+            toggleCode("l", "r");
         });
         italicButton.setOnAction(e -> {
             toggleStyle("-fx-font-style: italic;");
-            toggleCode("§o", "§r");
+            toggleCode("o", "r");
         });
         underlineButton.setOnAction(e -> {
             toggleStyle("-fx-underline: true;");
-            toggleCode("§n", "§r");
+            toggleCode("n", "r");
         });
         strikethroughButton.setOnAction(e -> {
             toggleStyle("-fx-strikethrough: true;");
-            toggleCode("§m", "§r");
+            toggleCode("m", "r");
         });
-        obfuscatedButton.setOnAction(e -> toggleCode("§k", "§r"));
+        obfuscatedButton.setOnAction(e -> toggleCode("k", "r"));
 
         resetButton.setOnAction(e -> {
             resetStyle();
-            toggleCode("§r", "§r");
+            toggleCode("r", "r");
         });
 
         blackButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #000000;");
-            toggleCode("§0", "§r");
+            toggleCode("0", "r");
         });
         darkBlueButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #0000AA;");
-            toggleCode("§1", "§r");
+            toggleCode("1", "r");
         });
         darkGreenButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #00AA00;");
-            toggleCode("§2", "§r");
+            toggleCode("2", "r");
         });
         darkAquaButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #00AAAA;");
-            toggleCode("§3", "§r");
+            toggleCode("3", "r");
         });
         darkRedButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #AA0000;");
-            toggleCode("§4", "§r");
+            toggleCode("4", "r");
         });
         darkPurpleButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #AA00AA;");
-            toggleCode("§5", "§r");
+            toggleCode("5", "r");
         });
         goldButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #FFAA00;");
-            toggleCode("§6", "§r");
+            toggleCode("6", "r");
         });
         grayButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #AAAAAA;");
-            toggleCode("§7", "§r");
+            toggleCode("7", "r");
         });
         darkGrayButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #555555;");
-            toggleCode("§8", "§r");
+            toggleCode("8", "r");
         });
         blueButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #5555FF;");
-            toggleCode("§9", "§r");
+            toggleCode("9", "r");
         });
         greenButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #55FF55;");
-            toggleCode("§a", "§r");
+            toggleCode("a", "r");
         });
         aquaButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #55FFFF;");
-            toggleCode("§b", "§r");
+            toggleCode("b", "r");
         });
         redButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #FF5555;");
-            toggleCode("§c", "§r");
+            toggleCode("c", "r");
         });
         lightPurpleButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #FF55FF;");
-            toggleCode("§d", "§r");
+            toggleCode("d", "r");
         });
         yellowButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #FFFF55;");
-            toggleCode("§e", "§r");
+            toggleCode("e", "r");
         });
         whiteButton.setOnAction(e -> {
             toggleStyle("-fx-fill: #FFFFFF;");
-            toggleCode("§f", "§r");
+            toggleCode("f", "r");
         });
 
         copyButton.setOnAction(e -> onCopyToClipboard());
 
-        chatCodeButton.setOnAction(e -> {
-            isMOTDMode = false;
-            updateModeButtonStyles();
-        });
-
         motdButton.setOnAction(e -> {
             isMOTDMode = true;
             updateModeButtonStyles();
+            String currentText = textCodeArea.getText();
+            if (!currentText.isEmpty()) {
+                String updatedText = currentText.replace("§", "\\u00A7");
+                textCodeArea.setText(updatedText);
+            }
+            applyCodesToPreview(textCodeArea.getText());
+        });
+
+        chatCodeButton.setOnAction(e -> {
+            isMOTDMode = false;
+            updateModeButtonStyles();
+            String currentText = textCodeArea.getText();
+            if (!currentText.isEmpty()) {
+                String updatedText = currentText.replace("\\u00A7", "§");
+                textCodeArea.setText(updatedText);
+            }
+            applyCodesToPreview(textCodeArea.getText());
         });
 
         updateModeButtonStyles();
@@ -208,6 +220,10 @@ public class MainController {
     }
 
     private void applyCodesToPreview(String codesText) {
+        final String processedCodesText = isMOTDMode
+                ? codesText.replaceAll("\\\\u00A7", "§")
+                : codesText;
+
         Platform.runLater(() -> {
             if (obfuscationTimeline != null) {
                 obfuscationTimeline.stop();
@@ -225,9 +241,9 @@ public class MainController {
             Random random = new Random();
             String charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-            while (index < codesText.length()) {
-                char c = codesText.charAt(index);
-                if (c == '§' && index + 1 < codesText.length()) {
+            while (index < processedCodesText.length()) {
+                char c = processedCodesText.charAt(index);
+                if (c == '§' && index + 1 < processedCodesText.length()) {
                     if (segmentBuffer.length() > 0) {
                         String segment = segmentBuffer.toString();
                         int segInsertStart = previewTextArea.getLength();
@@ -248,7 +264,7 @@ public class MainController {
                         }
                         segmentBuffer.setLength(0);
                     }
-                    char code = codesText.charAt(index + 1);
+                    char code = processedCodesText.charAt(index + 1);
                     index += 2;
                     switch (code) {
                         case '0': colorStyle = "-fx-fill: #000000; "; break;
@@ -336,17 +352,16 @@ public class MainController {
         }
     }
 
-    private void toggleCode(String startCode, String endCode) {
+    private void toggleCode(String code, String endCode) {
+        String prefix = isMOTDMode ? "\\u00A7" : "§";
+        String startCode = prefix + code;
+        String fullEndCode = prefix + endCode;
+
         int selStart = textCodeArea.getSelection().getStart();
         int selEnd = textCodeArea.getSelection().getEnd();
         String fullText = textCodeArea.getText();
 
-        boolean isColorCode = startCode.matches("§[0-9a-f]");
-
-        if (isMOTDMode) {
-            startCode = startCode.replace("§", "\\u00A7");
-            endCode = endCode.replace("§", "\\u00A7");
-        }
+        boolean isColorCode = code.matches("[0-9a-f]");
 
         String before = fullText.substring(0, selStart);
         String selected = fullText.substring(selStart, selEnd);
@@ -371,26 +386,18 @@ public class MainController {
             before = fullText.substring(0, expandedStart);
             selected = fullText.substring(expandedStart, selEnd);
 
-            Pattern p;
-            if (isMOTDMode) {
-                p = Pattern.compile("^(\\\\u00A7[0-9a-fk-or]+)");
-            } else {
-                p = Pattern.compile("^(§[0-9a-fk-or]+)");
-            }
+            Pattern p = Pattern.compile(isMOTDMode ? "^(\\\\u00A7[0-9a-fk-or]+)" : "^(§[0-9a-fk-or]+)");
             Matcher m = p.matcher(selected);
-            String prefix = "";
+            String prefixCodes = "";
             if (m.find()) {
-                prefix = m.group(1);
+                prefixCodes = m.group();
             }
-            String withoutColor;
-            if (isMOTDMode) {
-                withoutColor = prefix.replaceAll("\\\\u00A7[0-9a-f]", "");
-            } else {
-                withoutColor = prefix.replaceAll("§[0-9a-f]", "");
-            }
+            String withoutColor = isMOTDMode
+                    ? prefixCodes.replaceAll("\\\\u00A7[0-9a-f]", "")
+                    : prefixCodes.replaceAll("§[0-9a-f]", "");
             String newPrefix = startCode + withoutColor;
-            if (selected.startsWith(prefix)) {
-                selected = selected.substring(prefix.length());
+            if (selected.startsWith(prefixCodes)) {
+                selected = selected.substring(prefixCodes.length());
             }
             selected = newPrefix + selected;
             if (isMOTDMode) {
@@ -400,7 +407,7 @@ public class MainController {
                 selected = selected.replaceAll("(§r)+$", "");
                 after = after.replaceAll("^(§r)+", "");
             }
-            String newText = before + selected + endCode + after;
+            String newText = before + selected + fullEndCode + after;
             if (isMOTDMode) {
                 newText = newText.replaceAll("(\\\\u00A7r){2,}", "\\\\u00A7r");
             } else {
@@ -410,6 +417,31 @@ public class MainController {
             return;
         }
 
+        int codeLength = isMOTDMode ? 7 : 2;
+        String codeRegex = isMOTDMode ? "(\\\\u00A7.)" : "(§.)";
+        Pattern prefixPattern = Pattern.compile("^(" + codeRegex + ")+");
+        Matcher prefixMatcher = prefixPattern.matcher(selected);
+        String prefixCodes = "";
+        if (prefixMatcher.find()) {
+            prefixCodes = prefixMatcher.group();
+        }
+        StringBuilder colorPrefix = new StringBuilder();
+        StringBuilder formatPrefix = new StringBuilder();
+        for (int i = 0; i < prefixCodes.length(); i += codeLength) {
+            String singleCode = prefixCodes.substring(i, i + codeLength);
+            char codeChar = isMOTDMode ? singleCode.charAt(codeLength - 1) : singleCode.charAt(1);
+            if (codeChar == 'r') continue;
+            if ((codeChar >= '0' && codeChar <= '9') ||
+                    (codeChar >= 'a' && codeChar <= 'f') ||
+                    (codeChar >= 'A' && codeChar <= 'F')) {
+                colorPrefix.append(singleCode);
+            } else {
+                formatPrefix.append(singleCode);
+            }
+        }
+        String newPrefix = colorPrefix.toString() + startCode + formatPrefix.toString();
+        selected = newPrefix + selected.substring(prefixCodes.length());
+
         if (isMOTDMode) {
             selected = selected.replaceAll("(\\\\u00A7r)+$", "");
             after = after.replaceAll("^(\\\\u00A7r)+", "");
@@ -417,7 +449,7 @@ public class MainController {
             selected = selected.replaceAll("(§r)+$", "");
             after = after.replaceAll("^(§r)+", "");
         }
-        String newText = before + startCode + selected + endCode + after;
+        String newText = before + selected + fullEndCode + after;
         if (isMOTDMode) {
             newText = newText.replaceAll("(\\\\u00A7r){2,}", "\\\\u00A7r");
         } else {
