@@ -6,5 +6,6 @@ If nothing is highlighted or placed at all, formatting will be applied to the en
 
 When copying text, all new lines will be combined into one line via \n characters.
 
-https://github.com/user-attachments/assets/7493aace-49d0-40d8-b5e1-8b2ec4428a8a
+![chat__formatter](https://github.com/user-attachments/assets/8e3a0009-e4b4-42b7-a890-cf87ab14169c)
+
 
