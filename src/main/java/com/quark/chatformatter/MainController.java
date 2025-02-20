@@ -472,7 +472,16 @@ public class MainController {
     public void onCopyToClipboard() {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
-        content.putString(textCodeArea.getText());
+
+        String sourceText = textCodeArea.getText();
+
+        String[] lines = sourceText.split("\n", -1);
+
+        String outputText = (lines.length > 1)
+                ? String.join("\\n", lines)
+                : sourceText;
+
+        content.putString(outputText);
         clipboard.setContent(content);
         showPopup("Text copied!");
     }
